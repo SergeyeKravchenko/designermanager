@@ -22,7 +22,8 @@ import java.util.regex.Pattern;
 @Component
 public class UrlHtmlGenerator implements OrderedItemDocumentGenerator {
 
-    public static final String Oracal = "Ламінована наклейка Oracal";
+    public static final String OracalUkr = "Ламінована наклейка Oracal";
+    public static final String OracalRus = "Ламинированная наклейка Oracal";
     public static final String Pvh = "Пластик ПВХ";
     private List<OrderedItem> items;
     private static final Logger LOGGER = LoggerFactory.getLogger(UrlHtmlGenerator.class);
@@ -47,7 +48,7 @@ public class UrlHtmlGenerator implements OrderedItemDocumentGenerator {
                     tableRow.getCell(0).setText(Integer.toString(++count));
                     LOGGER.info("Processing " + count);
                     String name;
-                    if (item.getMaterial().contains(Oracal)) {
+                    if (item.getMaterial().contains(OracalUkr)|item.getMaterial().contains(OracalRus)) {
                         name = "Наклейка ламінована" + "\"" + item.getName() + "\"," + item.getRange();
                     } else {
                         Pattern pattern = Pattern.compile("\\d[\\s][м][м]");

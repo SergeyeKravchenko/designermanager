@@ -18,6 +18,9 @@ public class UrlHtmlConverter implements OrderedItemConverter {
     private List<String> itemProperties;
     List<OrderedItem> items;
     private static final Logger LOGGER = LoggerFactory.getLogger(UrlHtmlConverter.class);
+    public static final String SIZE = "[\\s]\\Р[а]?[о]?зм[і]?[е]?[р]";
+    public static final String RANGE = "\\d+[\\s]?[с]?[c]?[м]?[\\s]x?х?[\\s]\\d+[\\s][с]?[c]?[м]";
+    public static final String CHOICE = "В[ы]?[и]?б[о]?[і]?р матер[и]?[і]?ал[а]?[у]?:";
     private String regexp;
 
     @Override
@@ -54,14 +57,26 @@ public class UrlHtmlConverter implements OrderedItemConverter {
     private String getItemName() {
         String current = itemProperties.get(0);
         LOGGER.debug("Current :" + current);
-        regexp = "[\\s]\\Р[а]?[о]?зм[і]?[е]?[р][\\s]знака:";
-        String index = getStringWithRegexp(current,regexp);
-        return current.substring(0, current.indexOf(index)-2);
+        regexp = SIZE;
+        String index = getStringWithRegexp(current, regexp);
+        LOGGER.debug("String index :" + index);
+        regexp = CHOICE;
+        String indexNext = getStringWithRegexp(current, regexp);
+        LOGGER.debug("String indexNext :" + indexNext);
+        if (current.indexOf(index) < current.indexOf(indexNext)) {
+            LOGGER.debug("Index of index :"+current.indexOf(index));
+            LOGGER.debug("Index of indexNext :"+current.indexOf(indexNext));
+            return current.substring(0, current.indexOf(index) - 2);
+        } else {
+            LOGGER.debug("Index of index :" + current.indexOf(index));
+            LOGGER.debug("Index of indexNext :" + current.indexOf(indexNext));
+            return current.substring(0, current.indexOf(indexNext)-2);
+        }
     }
 
     private String getItemRange() {
         String current = itemProperties.get(0);
-        regexp = "\\d+[\\s]?[с]?[c]?[м]?[\\s]x?х?[\\s]\\d+[\\s][с]?[c]?[м]";
+        regexp = RANGE;
         return getStringWithRegexp(current, regexp);
     }
 
@@ -76,8 +91,8 @@ public class UrlHtmlConverter implements OrderedItemConverter {
 
     private String getItemMaterial() {
         String current = itemProperties.get(0);
-        regexp="В[ы]?[и]?б[о]?[і]?р матер[и]?[і]?ал[а]?[у]?:";
-        String index = getStringWithRegexp(current,regexp);
+        regexp = CHOICE;
+        String index = getStringWithRegexp(current, regexp);
         return current.substring(current.indexOf(index) + 17);
     }
 

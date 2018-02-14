@@ -47,33 +47,16 @@ public class UrlHtmlParser implements OrderedItemHtmlParser {
             list.add(result);
         }
         listMap.put(info, list);
-//            for (int i = 1; i < rows.size() - 3; i++) {
-//                Element row = rows.get(i);
-//                LOGGER.info("Parsing Rows :" + i);
-//                Elements cols = row.select("td");
-//                for (int j = 0; j < cols.size(); j++) {
-//                    Element col = cols.get(j);
-//                    LOGGER.info("Parsing Cols :" + j + " " + col);
-//                }
-//            }
         return listMap;
     }
 
     private void tableInfo(Document doc) {
-        Element table = doc.getElementsByTag("table").get(0);
-        LOGGER.debug("------Table 0-------");
-        LOGGER.debug(table.text());
-        Element table1 = doc.getElementsByTag("table").get(1);
-        LOGGER.debug("------Table 1-------");
-        LOGGER.debug(table1.text());
-        Element table2 = doc.getElementsByTag("table").get(2);
-        LOGGER.debug("------Table 2-------");
-        LOGGER.debug(table2.text());
-        Element table3 = doc.getElementsByTag("table").get(3);
-        LOGGER.debug("------Table 3-------");
-        LOGGER.debug(table3.text());
-        Element table4 = doc.getElementsByTag("table").get(4);
-        LOGGER.debug("------Table 4-------");
-        LOGGER.debug(table4.text());
+        Elements tableList = doc.getElementsByTag("table");
+        for (int i = 0; i < tableList.size(); i++) {
+            Element table = doc.getElementsByTag("table").get(0);
+            LOGGER.debug("------Table " + i + "-------");
+            LOGGER.debug(table.text());
+        }
+
     }
 }
