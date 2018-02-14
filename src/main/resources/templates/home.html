@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>DesignerManager</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+    </head>
+    <body>
+        <img class="myimg" th:src="@{/images/petia.jpg}"/>
+        <br/>
+        <h2> Welcome Petia </h2>
+
+        <form th:action="@{/process}" th:object="${orderNumberHolder}" method="POST">
+            <label th:if="${#fields.hasErrors('orderNumber')}" th:errors="*{orderNumber}" class="error"/><br/>
+            <input type="text" th:field="*{orderNumber}" placeholder="Enter order numbers"/> <br/><br/>
+            <input type="submit" value="Find orders"/>
+        </form>
+    <br/>
+    </body>
+</html>

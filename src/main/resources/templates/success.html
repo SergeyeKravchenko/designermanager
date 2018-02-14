@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>DesignerManager</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<span th:utext="${successMessage}" class="message"></span><br/><br/>
+
+<table>
+    <thead>
+    <tr>
+        <th>Order Number</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tr th:each="info : ${infoList}">
+        <td th:text="${info.getOrderNumber()}"/>
+        <td th:text="${info.getDescription()}"/>
+    </tr>
+</table><br/><br/>
+<form th:action="@{/home}" method="get">
+    <button type="Submit">Go To Home Page</button>
+</form>
+
+
+</body>
+</html>   

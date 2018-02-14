@@ -1,0 +1,48 @@
+.error{
+    color: red;
+    font-size: 27px;
+    font-style: italic;
+}
+body{
+    background-color:beige /* Цвет фона веб-страницы */
+}
+h2{
+     color: dimgray;
+     font-size: 33px;
+ }
+.message{
+    color: blueviolet;
+    font-size: 17px;
+}
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+.myimg {
+    width: 70px;
+    height: 80px;
+    border-radius: 45%;
+}
+input[type=text] {
+    padding:5px;
+    border:2px solid #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+input[type=text]:focus {
+    border-color:#333;
+}
+
+input[type=submit] {
+    padding:5px 15px;
+    background:lightblue;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
