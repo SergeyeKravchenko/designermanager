@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -22,6 +23,7 @@ public class UrlHtmlParser implements OrderedItemHtmlParser {
 
     @Override
     public Map<OrderInfo, List<String>> parse(String source) {
+        Assert.notNull(source, "Source must not be null");
         Map<OrderInfo, List<String>> listMap = new LinkedHashMap<>();
         OrderInfo info = new OrderInfo();
         List<String> list = new ArrayList<>();
@@ -53,7 +55,7 @@ public class UrlHtmlParser implements OrderedItemHtmlParser {
     private void tableInfo(Document doc) {
         Elements tableList = doc.getElementsByTag("table");
         for (int i = 0; i < tableList.size(); i++) {
-            Element table = doc.getElementsByTag("table").get(0);
+            Element table = doc.getElementsByTag("table").get(i);
             LOGGER.debug("------Table " + i + "-------");
             LOGGER.debug(table.text());
         }
