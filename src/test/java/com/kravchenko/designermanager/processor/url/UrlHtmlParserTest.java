@@ -2,7 +2,7 @@ package com.kravchenko.designermanager.processor.url;
 
 import com.kravchenko.designermanager.model.OrderInfo;
 import com.kravchenko.designermanager.processor.OrderedItemHtmlParser;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -25,14 +25,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UrlHtmlParserTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(UrlHtmlParser.class);
 
-    private String source;
-    private OrderInfo test;
+    private static String source;
+    private static OrderInfo test;
 
     @Autowired
     private OrderedItemHtmlParser parser;
 
-    @Before
-    public void before() throws Exception {
+    @BeforeClass
+    public static void before() throws Exception {
         File file = new ClassPathResource("661.html").getFile();
         StringBuilder builder = new StringBuilder();
         Files.lines(Paths.get(file.toString())).forEach(builder::append);
