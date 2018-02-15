@@ -57,7 +57,7 @@ public class UrlHtmlParserTest {
         parser.parse(null);
     }
 
-    @Test()
+    @Test
     public void shouldReturnExeptionIfOrderNumberDoesNotExist() {
         Map<OrderInfo, List<String>> listMap = parser.parse("");
         assertThat(listMap).isEmpty();
