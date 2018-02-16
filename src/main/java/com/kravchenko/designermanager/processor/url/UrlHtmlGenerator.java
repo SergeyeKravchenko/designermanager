@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +33,7 @@ public class UrlHtmlGenerator implements OrderedItemDocumentGenerator {
 
     @Override
     public void generate(Map<OrderInfo, List<OrderedItem>> infoListMap) {
+        Assert.notEmpty(infoListMap, "Source must not be empty");
         String path = environment.getRequiredProperty("generate.doc.path");
         for (OrderInfo info : infoListMap.keySet()) {
             XWPFDocument document = new XWPFDocument();
