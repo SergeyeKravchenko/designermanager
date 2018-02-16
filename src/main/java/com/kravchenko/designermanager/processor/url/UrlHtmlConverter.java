@@ -5,6 +5,7 @@ import com.kravchenko.designermanager.processor.OrderedItemConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +26,7 @@ public class UrlHtmlConverter implements OrderedItemConverter {
 
     @Override
     public List<OrderedItem> convert(List<String> rows) {
+        Assert.notEmpty(rows, "Source must not be empty");
         LOGGER.debug("=====Inside Converter==== " + rows);
         items = new ArrayList<>();
 
