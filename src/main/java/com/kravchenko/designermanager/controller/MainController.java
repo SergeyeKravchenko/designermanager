@@ -46,8 +46,12 @@ public class MainController {
             List<String> orderNumbers = Arrays.asList(holder.getOrderNumber().split(","));
             List<String> itemsInfo = connector.findOrderedItemsInfo(orderNumbers);
             List<OrderInfo> infoList = manager.processDocument(itemsInfo);
-            model.addAttribute("infoList", infoList);
-            model.addAttribute("successMessage", "Documents generated successfully");
+                model.addAttribute("infoList", infoList);
+            if (infoList.isEmpty()) {
+                model.addAttribute("message", "Order number does not exist");
+            }else {
+                model.addAttribute("message", "Documents generated successfully");
+            }
             return "success";
         }
     }

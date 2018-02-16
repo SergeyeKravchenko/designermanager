@@ -36,14 +36,18 @@ public class ProcessorManager implements OrderedItemProcessor {
         for (String source : sources) {
             LOGGER.debug("The source value :" + source);
             Map<OrderInfo, List<String>> listRowsPerNumber = parserHtml.parse(source);
-            for (OrderInfo info : listRowsPerNumber.keySet()) {
-                LOGGER.debug("Current order :" + info.toString());
-                infos.add(info);
-                List<OrderedItem> orderedItems = converter.convert(listRowsPerNumber.get(info));
-                LOGGER.debug(orderedItems.size() + orderedItems.toString());
-                Map<OrderInfo, List<OrderedItem>> orderInfoListMap = new HashMap<>();
-                orderInfoListMap.put(info,orderedItems);
-                generator.generate(orderInfoListMap);
+            if (!listRowsPerNumber.isEmpty()) {
+                for (OrderInfo info : listRowsPerNumber.keySet()) {
+                    LOGGER.debug("Current order :" + info.toString());
+                    infos.add(info);
+                    List<OrderedItem> orderedItems = converter.convert(listRowsPerNumber.get(info));
+                    LOGGER.debug(orderedItems.size() + orderedItems.toString());
+                    Map<OrderInfo, List<OrderedItem>> orderInfoListMap = new HashMap<>();
+                    orderInfoListMap.put(info, orderedItems);
+                    generator.generate(orderInfoListMap);
+                }
+            } else{
+                LOGGER.info("Order number does not exist");
             }
         }
         return infos;
