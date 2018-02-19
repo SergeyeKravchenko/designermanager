@@ -24,15 +24,15 @@ public class ProcessorManager implements OrderedItemProcessor {
     @Autowired
     OrderedItemDocumentGenerator generator;
 
-    private List<OrderInfo> infos = new ArrayList<>();
-
+    private List<OrderInfo> infos;
+    private Map<OrderInfo, List<OrderedItem>> orderInfoListMap;
     private static final Logger LOGGER = LoggerFactory.getLogger(ProcessorManager.class);
 
     @Override
     public List<OrderInfo> processDocument(List<String> sources) {
 
         LOGGER.debug("========Inside Manager=======");
-
+        infos = new ArrayList<>();
         for (String source : sources) {
             LOGGER.debug("The source value :" + source);
             Map<OrderInfo, List<String>> listRowsPerNumber = parserHtml.parse(source);
@@ -42,11 +42,11 @@ public class ProcessorManager implements OrderedItemProcessor {
                     infos.add(info);
                     List<OrderedItem> orderedItems = converter.convert(listRowsPerNumber.get(info));
                     LOGGER.debug(orderedItems.size() + orderedItems.toString());
-                    Map<OrderInfo, List<OrderedItem>> orderInfoListMap = new HashMap<>();
+                    orderInfoListMap = new HashMap();
                     orderInfoListMap.put(info, orderedItems);
                     generator.generate(orderInfoListMap);
                 }
-            } else{
+            } else {
                 LOGGER.info("Order number does not exist");
             }
         }
