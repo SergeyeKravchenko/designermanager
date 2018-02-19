@@ -15,10 +15,7 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @Data
@@ -46,7 +43,7 @@ public class SecurityConnector implements UrlConnector {
     private String getPageContent(String url) throws Exception {
         String result = performGet(url);
         setCookies(conn.getHeaderFields().get("Set-Cookie"));
-        LOGGER.debug(result);
+        LOGGER.debug("Result in GET :" + result);
         return result;
     }
 
@@ -89,19 +86,23 @@ public class SecurityConnector implements UrlConnector {
         }
         String result = response.toString();
         in.close();
-        LOGGER.debug(result);
+        LOGGER.debug("Result in POST :" + result);
         return result;
     }
 
     private Map<String, String> createUrlTarget(String body, List<String> orders) {
         Map<String, String> urlTargets = new HashMap<>();
-        String urlTarget = "";
-        int startToken = body.indexOf("token");
-        String value = body.substring(startToken, startToken + 38);
-        LOGGER.debug("Token :" + value);
-        for (String order : orders) {
-            urlTarget = "http://stendy-vsem.com/admin/index.php?route=sale/order/invoice&" + value + "&order_id=" + order;
-            urlTargets.put(order, urlTarget);
+        if (!body.contains("Такой логин и/или пароль не существует!")) {
+            String urlTarget = "";
+            int startToken = body.indexOf("token");
+            String value = body.substring(startToken, startToken + 38);
+            LOGGER.debug("Token :" + value);
+            for (String order : orders) {
+                urlTarget = "http://stendy-vsem.com/admin/index.php?route=sale/order/invoice&" + value + "&order_id=" + order;
+                urlTargets.put(order, urlTarget);
+            }
+        } else {
+            LOGGER.info("Credentials are not valid");
         }
         return urlTargets;
     }
