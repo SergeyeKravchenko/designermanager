@@ -48,6 +48,7 @@ public class MainController {
             List<OrderInfo> infoList = manager.processDocument(itemsInfo);
                 model.addAttribute("infoList", infoList);
             if (infoList.isEmpty()) {
+                //added by different developer
                 model.addAttribute("message", "Nothing to return. Check request parameters");
             }else {
                 model.addAttribute("message", "Documents generated successfully");
