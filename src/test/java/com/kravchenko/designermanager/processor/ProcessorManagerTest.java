@@ -29,7 +29,6 @@ public class ProcessorManagerTest {
     private static OrderedItem item1;
     private static OrderedItem item2;
     private static OrderedItem item3;
-    private static OrderInfo info;
     private static OrderInfo test;
     private static Map<OrderInfo, List<String>> listMap;
     private static Map<OrderInfo, List<OrderedItem>> generatorMap;
@@ -41,9 +40,6 @@ public class ProcessorManagerTest {
         Files.lines(Paths.get(file.toString())).forEach(builder::append);
         source = builder.toString();
 
-        info = new OrderInfo();
-        info.setOrderNumber("661");
-        info.setDescription("Test OrderInfo");
         item1 = new OrderedItem();
         item1.setCount(5);
         item1.setName("Знак Прохід заборонено Звалювання лісу");
