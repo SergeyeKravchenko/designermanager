@@ -5,6 +5,7 @@ import com.kravchenko.designermanager.model.OrderedItem;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,10 +17,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-//@RunWith(SpringRunner.class)
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 public class ProcessorManagerTest {
@@ -32,6 +34,18 @@ public class ProcessorManagerTest {
     private static OrderInfo test;
     private static Map<OrderInfo, List<String>> listMap;
     private static Map<OrderInfo, List<OrderedItem>> generatorMap;
+
+    @InjectMocks
+    private ProcessorManager manager;
+
+    @Mock
+    private OrderedItemDocumentGenerator generator;
+
+    @Mock
+    private OrderedItemHtmlParser parser;
+
+    @Mock
+    private OrderedItemConverter converter;
 
     @BeforeClass
     public static void init() throws IOException {
@@ -63,31 +77,24 @@ public class ProcessorManagerTest {
         test.setOrderNumber("661");
         test.setDescription("Дата:14.02.2018 Способ оплаты:Банківський переказ Замовник: Олена Ходикіна ТОВ \"Аерохендлінг\" e.khodykina@aeh.aero 0957668840");
         listMap=new HashMap<>();
-        listMap.put(test,Arrays.asList(source));
+        listMap.put(test, Collections.singletonList(source));
         generatorMap = new HashMap<>();
         generatorMap.put(test,items);
     }
-//    @Rule
-//    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Mock
-    OrderedItemDocumentGenerator generator;
-
-    @Mock
-    OrderedItemHtmlParser parser;
-
-    @Mock
-    OrderedItemConverter converter;
-
 
     @Test
     public void processDocumentWithMocks() {
-        ProcessorManager manager = new ProcessorManager(parser, converter, generator);
         when(parser.parse(source)).thenReturn(listMap);
-        when(converter.convert(Arrays.asList(source))).thenReturn(items);
-        manager.processDocument(Arrays.asList(source));
+        when(converter.convert(Collections.singletonList(source))).thenReturn(items);
+        manager.processDocument(Collections.singletonList(source));
         verify(parser).parse(source);
         verify(converter).convert(Arrays.asList(source));
         verify(generator).generate(generatorMap);
+    }
+    @Test
+    public void emptySourceShouldReturnEmptyList() {
+        List<OrderInfo> returned = manager.processDocument(Collections.EMPTY_LIST);
+        assertThat(returned).isEmpty();
+        verify(parser,never()).parse("");
     }
 }
