@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UrlHtmlParserTest {
+public class UrlHtmlParserIntegrationTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(UrlHtmlParser.class);
 
     private static String source;

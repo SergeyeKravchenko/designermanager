@@ -15,14 +15,20 @@ import java.util.Map;
 @Service
 public class ProcessorManager implements OrderedItemProcessor {
 
-    @Autowired
-    OrderedItemHtmlParser parserHtml;
+    private OrderedItemHtmlParser parserHtml;
+
+    private OrderedItemConverter converter;
+
+    private OrderedItemDocumentGenerator generator;
 
     @Autowired
-    OrderedItemConverter converter;
-
-    @Autowired
-    OrderedItemDocumentGenerator generator;
+    public ProcessorManager(OrderedItemHtmlParser parserHtml,
+                            OrderedItemConverter converter,
+                            OrderedItemDocumentGenerator generator) {
+        this.parserHtml = parserHtml;
+        this.converter = converter;
+        this.generator = generator;
+    }
 
     private List<OrderInfo> infos;
     private Map<OrderInfo, List<OrderedItem>> orderInfoListMap;

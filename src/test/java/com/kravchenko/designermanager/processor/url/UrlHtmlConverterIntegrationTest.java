@@ -19,9 +19,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UrlHtmlConverterTest {
+public class UrlHtmlConverterIntegrationTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UrlHtmlConverterTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UrlHtmlConverterIntegrationTest.class);
 
     @Autowired
     private OrderedItemConverter converter;

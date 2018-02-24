@@ -19,9 +19,9 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UrlHtmlGeneratorTest {
+public class UrlHtmlGeneratorIntegrationTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UrlHtmlGeneratorTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UrlHtmlGeneratorIntegrationTest.class);
     @Autowired
     private UrlHtmlGenerator generator;
 
@@ -70,8 +70,8 @@ public class UrlHtmlGeneratorTest {
         assertThat(new File(environment.getRequiredProperty("generate.doc.path") + info.getOrderNumber() + ".docx")).exists();
     }
 
-    @Test(expected = java.lang.IllegalArgumentException.class)
+    @Test (expected = java.lang.IllegalArgumentException.class)
     public void shouldReturnExeptionIfEmptySource() {
-        generator.generate(Collections.emptyMap());
+        generator.generate(Collections.EMPTY_MAP);
     }
 }
